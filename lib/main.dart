@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
-import 'answer.dart';
-
-//void main() {
-//  runApp(MyFirstFlutterApp());
-//}
+import 'package:flutter_complete_guide/quiz.dart';
+import 'package:flutter_complete_guide/result.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,33 +13,53 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var questions = [
+  final questions = const [
     {
       'questionText': '¿Cuál es tu color favorito?',
-      'answers': ['Rosa', 'Azul', 'Amarillo', 'Rojo', 'Verde']
+      'answers': [
+        {'text': 'Rosa', 'score': 1},
+        {'text': 'Azul', 'score': 2},
+        {'text': 'Amarillo', 'score': 3},
+        {'text': 'Rojo', 'score': 4},
+        {'text': 'Verde', 'score': 5},
+      ]
     },
     {
       'questionText': '¿Cuál es tu comida favorita?',
-      'answers': ['Pollo', 'Sushi', 'Helado', 'Papas', 'Ensalada']
+      'answers': [
+        {'text': 'Pollo', 'score': 1},
+        {'text': 'Sushi', 'score': 2},
+        {'text': 'Helado', 'score': 3},
+        {'text': 'Papas', 'score': 4},
+        {'text': 'Ensalada', 'score': 5},
+      ]
     },
     {
       'questionText': '¿Cuál es tu animal favorito?',
-      'answers': ['Pájaro', 'Gato', 'Perro', 'Pez', 'Osos']
-    },
-    {
-      'questionText': 'Fin de las preguntas',
-      'answers': ['Ok']
+      'answers': [
+        {'text': 'Pájaro', 'score': 1},
+        {'text': 'Gato', 'score': 2},
+        {'text': 'Perro', 'score': 3},
+        {'text': 'Pez', 'score': 4},
+        {'text': 'Osos', 'score': 5},
+      ]
     }
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
-      if (_questionIndex < questions.length - 1) {
-        _questionIndex++;
-      }
-      print(_questionIndex);
+      _questionIndex++;
+    });
+  }
+
+  void restartQuiz() {
+    setState(() {
+      _totalScore = 0;
+      _questionIndex = 0;
     });
   }
 
@@ -54,16 +70,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text("My First Flutter App"),
         ),
-        body: Column(
-          children: [
-            Question('Preguntas'),
-            Question(questions[_questionIndex]["questionText"]),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(answer, _answerQuestion);
-            }).toList()
-          ],
-        ),
+        body: (_questionIndex < questions.length)
+            ? Quiz(
+                questionIndex: _questionIndex,
+                questions: questions,
+                answerQuestion: _answerQuestion,
+              )
+            : Result(_totalScore, restartQuiz),
       ),
     );
   }
