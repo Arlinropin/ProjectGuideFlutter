@@ -17,18 +17,17 @@ class ColorProperties extends StatelessWidget {
     return Column(
       children: [
         Container(
-          color: colorRGB,
-          width: 100,
-          height: 100,
-          margin: EdgeInsets.all(30),
+          margin: const EdgeInsets.all(30),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Container(color: colorRGB, width: 100, height: 100),
+          ),
         ),
-        Text(
-          'Color: $name',
-          style: TextStyle(fontSize: 20),
-        ),
+        Text('Color: $name',
+            style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
         Text('Código RGB: $rgbCode\nCódigo hexadécimal: $hexCode',
-            style: TextStyle(fontSize: 16)),
-        SizedBox(
+            style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
+        const SizedBox(
           height: 30,
         )
       ],

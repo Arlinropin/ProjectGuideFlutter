@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(
               title: Text("Flutter Assignment"),
             ),
-            body: Center(
+            body: SingleChildScrollView(
                 child: Column(
               children: [
                 ColorProperties(
