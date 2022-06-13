@@ -1,0 +1,88 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "my_app",
+            "cwd": "my_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "my_app (profile mode)",
+            "cwd": "my_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_app (release mode)",
+            "cwd": "my_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "QuizApp",
+            "cwd": "QuizApp",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "QuizApp (profile mode)",
+            "cwd": "QuizApp",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "QuizApp (release mode)",
+            "cwd": "QuizApp",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_assignment",
+            "cwd": "widgets-basics-assignment-problem\\flutter_assignment",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_assignment (profile mode)",
+            "cwd": "widgets-basics-assignment-problem\\flutter_assignment",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_assignment (release mode)",
+            "cwd": "widgets-basics-assignment-problem\\flutter_assignment",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "widgets-basics-assignment-problem",
+            "cwd": "widgets-basics-assignment-problem\\widgets-basics-assignment-problem",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "widgets-basics-assignment-problem (profile mode)",
+            "cwd": "widgets-basics-assignment-problem\\widgets-basics-assignment-problem",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "widgets-basics-assignment-problem (release mode)",
+            "cwd": "widgets-basics-assignment-problem\\widgets-basics-assignment-problem",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

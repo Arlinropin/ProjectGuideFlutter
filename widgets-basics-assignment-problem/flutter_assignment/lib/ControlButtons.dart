@@ -6,18 +6,17 @@ class ControlButtons extends StatelessWidget {
 
   ControlButtons({required this.forward, required this.backward});
 
-  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-    onPrimary: Color.fromARGB(255, 171, 0, 9), // Color del texto
-    primary: Colors.grey[300], // Color del botón
-    minimumSize: Size(50, 36),
-    padding: EdgeInsets.symmetric(horizontal: 30),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(18)),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+      onPrimary: Theme.of(context).primaryColor, // Color del texto
+      primary: Colors.grey[300], // Color del botón
+      minimumSize: Size(50, 36),
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(18)),
+      ),
+    );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
