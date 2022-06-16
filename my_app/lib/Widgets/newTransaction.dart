@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_app/Widgets/adaptiveButton.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
@@ -46,52 +50,56 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Wrap(crossAxisAlignment: WrapCrossAlignment.end, children: [
-        TextField(
-          decoration: const InputDecoration(labelText: 'Gasto'),
-          controller: _titleController,
-          onSubmitted: (_) => _submitData,
-        ),
-        TextField(
-          decoration: const InputDecoration(labelText: 'Monto'),
-          controller: _amountController,
-          keyboardType: TextInputType.number,
-          onSubmitted: (_) => _submitData,
-        ),
-        Container(
-          height: 50,
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(_selectedDate == null
-                    ? '¡Sin fecha aún!'
-                    : ('Fecha: ' +
-                        DateFormat.yMMMMd('es').format(_selectedDate!))),
+    print('Build NewTransaction');
+    final mediaQuery = MediaQuery.of(context);
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+              bottom: mediaQuery.viewInsets.bottom + 10,
+              left: 10,
+              right: 10,
+              top: 10),
+          child: Wrap(crossAxisAlignment: WrapCrossAlignment.end, children: [
+            TextField(
+              decoration: const InputDecoration(labelText: 'Gasto'),
+              controller: _titleController,
+              onSubmitted: (_) => _submitData,
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: 'Monto'),
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => _submitData,
+            ),
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(_selectedDate == null
+                        ? '¡Sin fecha aún!'
+                        : ('Fecha: ' +
+                            DateFormat.yMMMMd('es').format(_selectedDate!))),
+                  ),
+                  AdaptiveButton(
+                      'Seleccionar fecha', () => _presentDatePicker())
+                ],
               ),
-              TextButton(
-                  onPressed: _presentDatePicker,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: ElevatedButton(
+                  onPressed: _submitData,
                   child: Text(
-                    'Selecciona fecha',
-                    style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontWeight: FontWeight.bold),
-                  ))
-            ],
-          ),
+                    'Agregar transacción',
+                    style: TextStyle(color: Colors.white),
+                  )),
+            )
+          ]),
         ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 5),
-          child: ElevatedButton(
-              onPressed: _submitData,
-              child: Text(
-                'Agregar transacción',
-                style:
-                    TextStyle(color: Theme.of(context).textTheme.button?.color),
-              )),
-        )
-      ]),
+      ),
     );
   }
 }

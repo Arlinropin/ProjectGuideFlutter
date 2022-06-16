@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:my_app/Theme/ThemeApp.dart';
 import 'package:my_app/Widgets/transactionList.dart';
@@ -6,7 +8,12 @@ import 'models/Transaction.dart';
 import 'Widgets/chart.dart';
 import 'Widgets/newTransaction.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -64,8 +71,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool _showChart = false;
+
   @override
   Widget build(BuildContext context) {
+    print('Build Main');
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text('Gastos personales'),
       actions: [
@@ -74,30 +87,55 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.add))
       ],
     );
-    final usableSpace = (MediaQuery.of(context).size.height -
-        MediaQuery.of(context).padding.top -
+
+    final usableSpace = (mediaQuery.size.height -
+        mediaQuery.padding.top -
         appBar.preferredSize.height);
+
+    final list = TransactionList(
+        transactions: _userTransactions, deleteTransaction: _deleteTransaction);
+
+    final chart = Chart(_recentTransactions);
+
+    final switchLandscape =
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text('Mostrar el gráfico'),
+      Switch.adaptive(
+          activeColor: Theme.of(context).accentColor,
+          value: _showChart,
+          onChanged: (value) {
+            setState(() {
+              _showChart = value;
+            });
+          })
+    ]);
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-                height: usableSpace * 0.25, child: Chart(_recentTransactions)),
-            Container(
-              height: usableSpace * 0.75,
-              child: TransactionList(
-                  transactions: _userTransactions,
-                  deleteTransaction: _deleteTransaction),
-            )
+            isLandscape
+                ? Column(children: [
+                    switchLandscape,
+                    Container(
+                        height: usableSpace, child: _showChart ? chart : list)
+                  ])
+                : Column(children: [
+                    Container(height: usableSpace * 0.3, child: chart),
+                    Container(height: usableSpace * 0.7, child: list)
+                  ])
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(),
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () => _startAddNewTransaction(),
+            ),
     );
   }
 }
