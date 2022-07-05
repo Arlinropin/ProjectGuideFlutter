@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import '../../Models/Meal.dart';
 import '../CategoriesMealsScreen/mealItem.dart';
 
-class FavoritesScreen extends StatelessWidget {
+class FavoritesScreen extends StatefulWidget {
   List<Meal> favoriteMeals;
   FavoritesScreen(this.favoriteMeals);
+
+  @override
+  State<FavoritesScreen> createState() => _FavoritesScreenState();
+}
+
+class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: (favoriteMeals.isEmpty)
+        body: (widget.favoriteMeals.isEmpty)
             ? const Center(
                 child: Text(
                   'You have no favorites yet\nStart adding some!',
@@ -18,9 +24,9 @@ class FavoritesScreen extends StatelessWidget {
               )
             : ListView.builder(
                 itemBuilder: (context, index) {
-                  return MealItem(meal: favoriteMeals[index]);
+                  return MealItem(meal: widget.favoriteMeals[index]);
                 },
-                itemCount: favoriteMeals.length,
+                itemCount: widget.favoriteMeals.length,
               ));
   }
 }
